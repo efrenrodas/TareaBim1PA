@@ -27,7 +27,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
     IFGestionCatalogos objC = null;
     IFRolUsuario objRU = null;
     IFGestionRolFuncionalidad objRF = null;
-    
+    JFramePrincipal jfp=null;
     /*
     Faltaria implemetar para incluir los catálogos y los Items
     */
@@ -362,6 +362,15 @@ public class JFramePrincipal extends javax.swing.JFrame {
 
 
     }
+    public void  validar(int rol){
+        if(rol==5){
+        this.jMenu3.setEnabled(false);
+      //  
+        }
+        else{
+        this.jMenu3.setEnabled(true);
+        }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;

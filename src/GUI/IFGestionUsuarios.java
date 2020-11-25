@@ -10,8 +10,13 @@ import BusinessLogic.BLUsuario;
 import Clases.ItemCatalogo;
 import Clases.Usuario;
 
+import Clases.Encriptacion;
 //import ManejaArchivos.OperaUsuario;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -27,6 +32,8 @@ import javax.swing.table.DefaultTableModel;
 public class IFGestionUsuarios extends javax.swing.JInternalFrame {
     BusinessLogic.BLCatalogos objManejadorCatalogo = new BLCatalogos();
     BusinessLogic.BLUsuario objManejadorUsuarios = new BLUsuario();
+    Clases.Encriptacion objEncripta = new Encriptacion();
+    
     public String IdUsuario;
    public String Identificacion;
    public String Nombres;
@@ -384,7 +391,14 @@ public class IFGestionUsuarios extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         if (btnGuardar.getText().equals("Guardar")) {
-           boolean resultado = GuardarUsuario();
+           boolean resultado = false;
+            try {
+                resultado = GuardarUsuario();
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(IFGestionUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(IFGestionUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+            }
         if (resultado==true){
                 JOptionPane.showMessageDialog(this, "Datos almacenados con exito");
                 Limpiar();            
@@ -502,19 +516,23 @@ public class IFGestionUsuarios extends javax.swing.JInternalFrame {
         cmbPais.setSelectedIndex(0);
     }
     
-    public boolean GuardarUsuario(){
+    public boolean GuardarUsuario() throws NoSuchAlgorithmException, UnsupportedEncodingException{
         System.out.println("Enviar a Insertar Usuario en BDD");
-        
+      String clave = objEncripta.encrypt(txtPass.getText());
+    // String clave="er";
+        System.out.println(clave);
         Usuario objUsuario = new Usuario(-1, txtIdentificacion.getText(), //enviar en blanco
                                             txtNombres.getText(), 
                                             txtApellidos.getText(), 
                                             txtLogin.getText(), 
-                                            txtPass.getText(), 
+                                            clave, 
                                             cmbEstado.getSelectedIndex(), 
                                             cmbPais.getSelectedIndex(), 
                                             cmbGenero.getSelectedIndex());
-        return objManejadorUsuarios.Registrar(objUsuario);
-        
+       boolean res = objManejadorUsuarios.Registrar(objUsuario);
+        System.out.println(res);
+        return res;
+       
     }
     
   public boolean ActualizarUsuario(){
