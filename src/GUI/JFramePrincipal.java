@@ -50,6 +50,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jDesktopPane1 = new javax.swing.JDesktopPane();
+        labelUser = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -71,15 +72,25 @@ public class JFramePrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        labelUser.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+
+        jDesktopPane1.setLayer(labelUser, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1193, Short.MAX_VALUE)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(labelUser, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(566, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 608, Short.MAX_VALUE)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGap(204, 204, 204)
+                .addComponent(labelUser, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(354, Short.MAX_VALUE))
         );
 
         jMenu2.setText("Opciones");
@@ -156,6 +167,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
+        jMenuBar1.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -362,14 +374,22 @@ public class JFramePrincipal extends javax.swing.JFrame {
 
 
     }
-    public void  validar(int rol){
-        if(rol==5){
+    public void  validar(int rol, String userName){
+       String rolVisible = " ";
+       
+        System.out.println("el rol es"+rol);
+        if(rol==2){
         this.jMenu3.setEnabled(false);
-      //  
+     rolVisible="Administrador";
+     this.jMenu3.setEnabled(true);
         }
-        else{
-        this.jMenu3.setEnabled(true);
-        }
+        else if(rol==3)
+        {rolVisible="Contador";}
+       
+        
+      
+        
+          this.labelUser.setText("hola "+userName+" "+rolVisible);
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -390,5 +410,6 @@ public class JFramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JLabel labelUser;
     // End of variables declaration//GEN-END:variables
 }

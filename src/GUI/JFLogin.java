@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,7 +25,8 @@ import javax.swing.table.DefaultTableModel;
 public class JFLogin extends javax.swing.JFrame {
 String  usu;
 String pas;
-int rol=4;
+String nombreUsuario;
+int rol;
 String clave ;
  JFramePrincipal jf= new JFramePrincipal();
    BusinessLogic.BLUsuario objManejadorUsuarios = new BLUsuario();
@@ -134,9 +136,12 @@ String clave ;
     } catch (SQLException ex) {
         Logger.getLogger(JFLogin.class.getName()).log(Level.SEVERE, null, ex);
     }
-      
-            jf.validar(res);
-            jf.setVisible(true);
+        System.out.println("enviando rol "+res);
+        if (rol!=0) {
+           jf.validar(res,nombreUsuario);
+            jf.setVisible(true); 
+        }
+            
         
     }//GEN-LAST:event_btnIngresarActionPerformed
  
@@ -148,7 +153,7 @@ String clave ;
         for (Usuario usu : lstUsuario) {
             String id = String.valueOf(usu.getIdUsuario());
             String identificacion = usu.getUsIdentificacion();
-            String nombre = usu.getUsNombres();
+           nombreUsuario = usu.getUsNombres();
             String apellido = usu.getUsApellidos();
             String login = usu.getUsLogin();
              pass = usu.getUsPassword();
@@ -161,8 +166,12 @@ String clave ;
         System.out.println(pas);
         if (pas.equals(pass)) {
             System.out.println("login correcto");
-          rol=5;  
+          rol=2;  
       }
+        else
+        {
+        JOptionPane.showMessageDialog(null, "Datos Incorrectos ");
+        }
         return rol ;
     }
     /**
